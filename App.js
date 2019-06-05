@@ -7,6 +7,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       // data: ["Harry", "James", "Bobby", "Carl", "Jos", "Owen", "Winters", "Ralf"]
+      refresh: false,
       data: [
         {
           name: "Harry",
@@ -37,6 +38,26 @@ export default class App extends React.Component {
     }
   }
 
+  refreshData = () => {
+    this.setState({
+      refresh: true
+    });
+
+    this.setState({
+      refresh: false,
+      data: [
+        {
+          name: "Updated",
+          image: "http://i.pravatar.cc/400?img=1"
+        }, {
+          name: "James",
+          image: "http://i.pravatar.cc/400?img=3"
+        }
+      ]
+    })
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -44,6 +65,8 @@ export default class App extends React.Component {
         <FlatList
           data={this.state.data}
           style={{width: '100%'}}
+          onRefresh={this.refreshData}
+          refreshing={this.state.refresh}
           keyExtractor={ (item, index) => index.toString() }
           renderItem={({item, seperators}) => (
             <View style={{paddingVertical: 35, borderBottomWidth: 1}}>
